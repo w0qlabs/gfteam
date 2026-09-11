@@ -30,6 +30,7 @@ Run `npm run build` before opening Live Preview. When editing JavaScript or CSS 
 - Keyboard: focus the belt and use arrows; Home selects white, End selects black. Enter cycles. The rank buttons also work with standard Tab/Enter/Space.
 - The technique sequence follows desktop/tablet scrolling. “Ver técnica” plays the complete sequence; numbered controls select a stage. Explicit choices take precedence until the visitor scrolls again.
 - Each replay draws a stylized finish: chave de braço, triângulo or mata-leão. A shuffled bag covers all three before repeating and prevents consecutive identical finishes. The final caption names the selected finish. Reduced-motion visitors can also start a new variation after the final stage.
+- “Pausar técnica” freezes the current pose; “Continuar técnica” resumes the same finish. Completed sequences reset with a brief fade before the next variation. Each finish has its own setup poses, holds and duration.
 - Reduced motion disables the spring and automatic motion; “Próxima etapa” and stage buttons expose the sequence without animation.
 - Mobile navigation uses a native modal dialog with contained focus and Escape support.
 
@@ -57,5 +58,7 @@ npx --yes --package @playwright/cli playwright-cli -s=gfteam run-code --filename
 `output/playwright/preview-compatibility.cjs` verifies the VS Code Live Preview URL, Vite development, Vite production preview and static serving of `dist/index.html`, including image/font/icon loading and actual belt/technique animation.
 
 Scripts return named pass/fail results and produce local screenshots in `output/playwright/`. The matrix covers 1440, 1280, 768, 390 and 320px, keyboard/mouse/touch belt input, technique stages, reduced motion, menu focus, CTA destination and axe WCAG A/AA checks. CTA testing intercepts WhatsApp navigation; no message is sent.
+
+The animation refinement inventory and evidence are in `ANIMATION_QA.md`. Run `node output/playwright/rig-continuity.mjs` for joint continuity and the shuffled cycle. With Vite development running on port 4173, run `motion-review.cjs` and `motion-behavior.cjs` through the Playwright CLI as above. The review samples every finish's initial, intermediate and final poses at 1440, 768, 390 and 320px; the behavior check exercises real playback, pause/resume, keyboard, scrolling, touch and reduced motion. `motion-sheets.mjs final` composes the saved desktop frames into three review sheets.
 
 Schedules are the opening hours supplied in the previous repository, with class times requested directly from the academy. No current external timetable, promotion or price is inferred.
