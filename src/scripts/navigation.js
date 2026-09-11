@@ -1,48 +1,99 @@
-import { animate } from 'animejs';
+import { gsap } from "gsap";
 
 export function initNavigation() {
-  const header = document.querySelector('[data-header]');
-  const toggle = document.querySelector('.menu-toggle');
-  const menu = document.querySelector('.mobile-menu');
-  const menuLinks = menu.querySelectorAll('nav a');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const updateHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
-
-  function setMenu(open) {
-    toggle.setAttribute('aria-expanded', String(open));
-    menu.setAttribute('aria-hidden', String(!open));
-    document.body.classList.toggle('menu-open', open);
-    header.classList.toggle('menu-active', open);
-
-    if (reduceMotion) {
-      menu.style.visibility = open ? 'visible' : 'hidden';
-      menu.style.transform = open ? 'translateY(0)' : 'translateY(-102%)';
-      return;
-    }
-
-    if (open) {
-      menu.style.visibility = 'visible';
-      animate(menu, { y: ['-102%', '0%'], duration: 720, ease: 'outExpo' });
-      animate(menuLinks, { y: [35, 0], opacity: [0, 1], delay: (_, i) => 170 + i * 55, duration: 620, ease: 'outExpo' });
-    } else {
-      animate(menu, {
-        y: [0, '-102%'],
-        duration: 560,
-        ease: 'inOutQuart',
-        onComplete: () => { menu.style.visibility = 'hidden'; },
-      });
-    }
-  }
-
-  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-  menuLinks.forEach((link) => link.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-      setMenu(false);
-      toggle.focus();
-    }
+  const abort = new AbortController();
+  const header = document.querySelector(".site-header");
+  const updateHeader = () => {
+    header.classList.toggle("is-compact", window.scrollY > 16);
+  };
+  window.addEventListener("scroll", updateHeader, {
+    passive: true,
+    signal: abort.signal,
   });
+  updateHeader();
+  const menu = document.getElementById("mobile-menu");
+  const toggle = document.querySelector(".menu-toggle");
+  const closeButton = document.querySelector(".menu-close");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  let entry;
+  function close() {
+    menu.close();
+  }
+  toggle.addEventListener(
+    "click",
+    () => {
+      menu.showModal();
+      document.body.classList.add("menu-open");
+      toggle.setAttribute("aria-expanded", "true");
+      if (!reduced.matches)
+        entry = gsap.fromTo(
+          menu.querySelectorAll("nav a"),
+          { x: 18, opacity: 0.4 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.06,
+            ease: "power3.out",
+            clearProps: "all",
+          },
+        );
+    },
+    { signal: abort.signal },
+  );
+  closeButton.addEventListener("click", close, { signal: abort.signal });
+  menu.addEventListener(
+    "close",
+    () => {
+      entry?.kill();
+      document.body.classList.remove("menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+    },
+    { signal: abort.signal },
+  );
+  menu.querySelectorAll("a").forEach((link) =>
+    link.addEventListener(
+      "click",
+      () => {
+        const target = document.querySelector(link.hash);
+        close();
+        if (target) {
+          target.setAttribute("tabindex", "-1");
+          target.focus({ preventScroll: true });
+        }
+      },
+      { signal: abort.signal },
+    ),
+  );
+  const desktop = matchMedia("(min-width: 601px)");
+  desktop.addEventListener(
+    "change",
+    () => {
+      if (desktop.matches && menu.open) close();
+    },
+    { signal: abort.signal },
+  );
+  const navLinks = [...document.querySelectorAll(".desktop-nav a")];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          if (link.hash === `#${entry.target.id}`)
+            link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      });
+    },
+    { rootMargin: "-10% 0px -55% 0px", threshold: 0 },
+  );
+  navLinks.forEach((link) =>
+    observer.observe(document.querySelector(link.hash)),
+  );
+  return () => {
+    abort.abort();
+    entry?.kill();
+    observer.disconnect();
+    if (menu.open) close();
+  };
 }

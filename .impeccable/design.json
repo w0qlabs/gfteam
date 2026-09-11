@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-11T13:15:00Z",
+  "title": "Design System: GFTeam Avaré",
+  "extensions": {
+    "shadows": [
+      { "name": "belt-anchor", "value": "0 7px 10px #002b252b", "purpose": "Physical depth beneath the wrapped belt." }
+    ],
+    "motion": [
+      { "name": "interaction-ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Tactile control feedback." },
+      { "name": "entrance-ease", "value": "power3.out", "purpose": "Restrained headline and image entry." },
+      { "name": "belt-spring", "value": "stiffness 205, damping 19", "purpose": "Resistance and elastic release, disabled for reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "600px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "laptop", "value": "1200px" },
+      { "name": "wide", "value": "1550px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary button", "kind": "button", "refersTo": "button-primary",
+      "description": "Arrange a first training session.",
+      "html": "<button class=\"ds-primary\">Agende seu primeiro treino</button>",
+      "css": ".ds-primary{font:700 13px Manrope,sans-serif;background:var(--color-green-deep,#006b35);color:#fff;padding:15px 22px;min-height:54px;border:1px solid transparent;border-radius:3px;cursor:pointer;transition:background .2s,transform .2s}.ds-primary:hover{background:#00572b}.ds-primary:active{transform:translateY(2px)}.ds-primary:focus-visible{outline:3px solid #002776;outline-offset:6px}"
+    },
+    {
+      "name": "Outlined button", "kind": "button", "refersTo": "button-outline",
+      "description": "Play the conceptual technique sequence.",
+      "html": "<button class=\"ds-outline\">Ver técnica</button>",
+      "css": ".ds-outline{font:700 12px Manrope,sans-serif;background:transparent;color:var(--color-green-deep,#006b35);padding:12px 17px;min-height:48px;border:1px solid currentColor;border-radius:3px;cursor:pointer;transition:background .2s,transform .2s}.ds-outline:hover{background:#e1e8de}.ds-outline:active{transform:translateY(2px)}.ds-outline:focus-visible{outline:3px solid #002776;outline-offset:6px}"
+    },
+    {
+      "name": "Closing invitation button", "kind": "button", "refersTo": "button-yellow",
+      "description": "Primary action on the source-green contact surface.",
+      "html": "<button class=\"ds-yellow\">Agende seu primeiro treino</button>",
+      "css": ".ds-yellow{font:700 13px Manrope,sans-serif;background:var(--color-accent,#ffcc00);color:var(--color-text,#090b0a);padding:15px 22px;min-height:54px;border:1px solid transparent;border-radius:3px;cursor:pointer;transition:background .2s,transform .2s}.ds-yellow:hover{background:#ffe16a}.ds-yellow:active{transform:translateY(2px)}.ds-yellow:focus-visible{outline:3px solid #002776;outline-offset:6px}"
+    },
+    {
+      "name": "Section navigation", "kind": "nav",
+      "description": "A quiet row with visible location and hover feedback.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Academia\"><a href=\"#academia\">A academia</a><a href=\"#professores\">Professores</a><a href=\"#treinos\">Treinos</a></nav>",
+      "css": ".ds-nav{display:flex;gap:32px;font:600 12px Manrope,sans-serif}.ds-nav a{color:var(--color-text,#090b0a);padding:12px 0;text-decoration:none;border-bottom:2px solid transparent}.ds-nav a:hover{border-color:var(--color-primary,#009246)}.ds-nav a:focus-visible{outline:3px solid #002776;outline-offset:6px}"
+    },
+    {
+      "name": "FAQ disclosure", "kind": "custom",
+      "description": "Native expandable practical information.",
+      "html": "<details class=\"ds-faq\"><summary>Preciso ter experiência?</summary><p>Não. As turmas recebem iniciantes, com aprendizado no seu ritmo.</p></details>",
+      "css": ".ds-faq{font:400 13px/1.7 Manrope,sans-serif;color:var(--color-text,#090b0a);border-bottom:1px solid var(--color-line,#d1d6cf)}.ds-faq summary{font-weight:600;cursor:pointer;padding:22px 0}.ds-faq summary:hover{color:var(--color-green-deep,#006b35)}.ds-faq summary:focus-visible{outline:3px solid #002776;outline-offset:6px}.ds-faq p{padding:0 20px 25px 0;color:var(--color-muted,#5c635e)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A evolução começa na base",
+    "overview": "An editorial academy experience grounded in actual training photography, the professor's portrait and a physical belt tied across an architectural opening. Spacious neutral surfaces give the original Brazilian brand colors deliberate emphasis. Native HTML and CSS carry the content; isolated GSAP modules provide progression and feedback.",
+    "keyCharacteristics": ["Authentic academy photography and prominent human portraits.", "Oversized compact lettering with readable supporting text.", "A physical belt interaction within a restrained green bay.", "Spacious editorial layouts instead of repeated feature cards."],
+    "rules": [{ "name": "The Local Rank Rule", "body": "Belt colors belong to the belt and its five selectors; changing a rank never changes root brand tokens.", "section": "colors" }],
+    "dos": ["Do preserve the exact original green, yellow and navy as the recognizable identity.", "Do use the dark green shade when small white text needs additional contrast.", "Do retain real photography, names, credentials and source contact information.", "Do provide explicit controls alongside scroll and drag interactions."],
+    "donts": ["Don't recolor the site according to the selected belt.", "Don't invent ranks, achievements, schedules, prices, promotions or testimonials.", "Don't replace professor photographs with stock or generated faces.", "Don't turn every content section into repeated cards or animate every element."]
+  }
+}
