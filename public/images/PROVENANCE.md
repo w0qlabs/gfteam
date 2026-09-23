@@ -4,7 +4,7 @@ Original sources: these assets existed in the repository before the redesign.
 
 | Source | Content | Derivatives |
 | --- | --- | --- |
-| hero.jpg | Actual GFTeam Avaré academy training | hero-640.webp, hero-1280.webp |
+| new-hero.jpg | Actual GFTeam Avaré academy training | hero-640.webp, hero-1280.webp |
 | cesinha.jpg | Professor Cesinha | cesinha-480.webp, cesinha-900.webp |
 | cesinha-julio.jpg | Cesinha with founder Julio Cesar | cesinha-julio-480.webp, cesinha-julio-800.webp |
 | logo.png | Official GFTEAM logo | logo-160.webp, logo-600.webp |
